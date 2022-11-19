@@ -13,9 +13,15 @@ test('Expecting result true', () => {
     }
   }
 
-  const res = GameSavingLoader.load().then((saving) => {
-    return JSON.parse(saving)       
-  });
+  const res = (async () => {
+    try {
+      const saving = await GameSavingLoader.load();
+      return JSON.parse(saving)
+    }
+    catch(e) {
+      console.log(e)
+    }
+  })();
 
     expect(expect).toEqual(res);
 });

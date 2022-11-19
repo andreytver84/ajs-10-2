@@ -7,18 +7,27 @@ console.log('worked');
 
 console.log(sum([1, 2]));
 
+
 export default class GameSavingLoader {
-  static load() {      
-    return new Promise((resolve, reject) => {
-      read().then((data) => {
-        resolve(json(data))          
-      })
-    })
+  static load() {
+    return (async () => {
+      try {
+        const data = await  read();
+        return await json(data);
+      }
+      catch(e) {
+        console.log(e)
+      }
+    })();   
   }
 }
 
-GameSavingLoader.load().then((saving) => {
-  return JSON.parse(saving)       
-}, (error) => {
-  console.log(error)
-});
+(async () => {
+  try {
+    const saving = await GameSavingLoader.load();
+    return JSON.parse(saving)
+  }
+  catch(e) {
+    console.log(e)
+  }
+})();
